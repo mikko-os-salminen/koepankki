@@ -51,6 +51,19 @@ def update_test():
 
     return redirect("/test/" + str(test_id))
 
+@app.route("/remove_test/<int:test_id>", methods=["GET", "POST"])
+def remove_test(test_id):
+    if request.method == "GET":
+        test = tests.get_test(test_id)
+        return render_template("remove_test.html", test=test)
+
+    if request.method == "POST":
+        if "remove" in request.form:
+            tests.remove_test(test_id)
+            return redirect("/")
+        else:
+            return redirect("/test/" + str(test_id))
+
 @app.route("/register")
 def register():
     return render_template("register.html")

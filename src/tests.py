@@ -31,3 +31,7 @@ def update_test(test_id, aine, aihe, vuosi, koe):
                               koe = ?
                           WHERE id = ?"""
     db.execute(sql, [aine, aihe, vuosi, koe, test_id])
+
+def remove_test(test_id):
+    sql = "DELETE FROM tests WHERE id = ?"
+    db.execute(sql, [test_id])

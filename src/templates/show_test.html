@@ -12,6 +12,7 @@
   {% if session.user_id == test.user_id %}
   <p>
     <a href="/edit_test/{{ test.id }}">Muokkaa</a>
+    <a href="/remove_test/{{ test.id }}">Poista</a>
   </p>
   {% endif %}
 

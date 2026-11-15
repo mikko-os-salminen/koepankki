@@ -23,6 +23,14 @@
     <a href="/new_test">Lisää uusi koe</a>
 
   </p>
+
+  <h2> Lista kokeista:</h2>
+
+  <ul>
+    {% for test in tests %}
+    <li><a href="/test/{{ test.id }}">{{ test.aine, test.aihe, test.vuosi }}</a></li>
+    {% endfor %}
+  </ul>
 </body>
 
 </html>

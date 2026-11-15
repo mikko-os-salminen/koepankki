@@ -10,7 +10,13 @@ app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    all_tests = tests.get_tests()
+    return render_template("index.html", tests=all_tests)
+
+@app.route("/test/<int:test_id>")
+def show_test(test_id):
+    test = tests.get_test(test_id)
+    return render_template("show_test.html", test=test)
 
 @app.route("/new_test")
 def new_test():

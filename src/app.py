@@ -3,6 +3,7 @@ from flask import Flask, request, render_template, redirect, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
+import tests
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -23,8 +24,8 @@ def create_test():
     koe = request.form["koe"]
     user_id = session["user_id"]
 
-    sql = "INSERT INTO tests (aine, aihe, vuosi, koe, user_id) VALUES (?, ?, ?, ?, ?)"
-    db.execute(sql, [aine, aihe, vuosi, koe, user_id])
+    tests.add_test(aine, aihe, vuosi, koe, user_id)
+
     return redirect("/")
 
 @app.route("/register")

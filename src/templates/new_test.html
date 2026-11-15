@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Uusi koe</title>
+</head>
+
+<body>
+  <h2>Lisää uusi koe:</h2>
+  <form action="/create_test" method="post">
+    <p>
+      Aine: <br />
+      <input type="text" name="aine" />
+    </p>
+    <p>
+      Aihe: <br />
+      <input type="text" name="aihe" />
+    </p>
+    <p>
+      Vuosi: <br />
+      <input type="text" name="vuosi" />
+    </p>
+      Koe: <br />
+      <textarea name="koe" rows="16" cols="60"></textarea>
+    </p>
+    <input type="submit" value="Tallenna koe" />
+  </form>
+</body>
+
+</html>

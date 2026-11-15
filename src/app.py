@@ -13,6 +13,16 @@ def index():
     all_tests = tests.get_tests()
     return render_template("index.html", tests=all_tests)
 
+@app.route("/find_test")
+def find_test():
+    query = request.args.get("query")
+    if query:
+        results = tests.find_tests(query)
+    else:
+        query = ""
+        results = []
+    return render_template("find_test.html", query=query, results=results)
+
 @app.route("/test/<int:test_id>")
 def show_test(test_id):
     test = tests.get_test(test_id)

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Etsi koe</title>
+</head>
+
+<body>
+  <h1>Etsi koetta</h1>
+  
+  <form action="/find_test" method="get">
+    <p>
+        Minkä aineen kokeet haluat: <input type="text" name="query" value="{{ query }}">
+    </p>
+    <input type="submit" value="Etsi">
+    </form>
+
+    {% if query %}
+    <h2>Tulokset:</h2>
+    
+    <ul>
+        {% for test in results %}
+        <li><a href="/test/{{ test.id }}">{{ test.aine, test.aihe, test.vuosi }}</a></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+  <p>
+    <a href="/">Palaa etusivulle</a>
+  <p>
+</body>
+
+</html>

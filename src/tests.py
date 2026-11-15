@@ -35,3 +35,10 @@ def update_test(test_id, aine, aihe, vuosi, koe):
 def remove_test(test_id):
     sql = "DELETE FROM tests WHERE id = ?"
     db.execute(sql, [test_id])
+
+def find_tests(query):
+    sql = """SELECT id, aine, aihe, vuosi
+             FROM tests
+             WHERE aine LIKE ?
+             ORDER BY aihe"""
+    return db.query(sql, ["%" + query + "%"])

@@ -5,7 +5,16 @@
   <title>{{test.aihe}}</title>
 </head>
 
+
 <body>
+
+
+  {% if session.user_id == test.user_id %}
+  <p>
+    <a href="/edit_test/{{ test.id }}">Muokkaa</a>
+  </p>
+  {% endif %}
+
   <h2>Kokeen tiedot:</h2>
   <p>
     Kokeen pitäjä: {{ test.username }}

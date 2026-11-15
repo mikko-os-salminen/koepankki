@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Ilmoituksen muokkaus</title>
+</head>
+
+<body>
+  <h2>Muokkaa koetta:</h2>
+  <form action="/update_test" method="post">
+    <p>
+      Aine: <br />
+      <input type="text" name="aine" value="{{ test.aine }}"/>
+    </p>
+    <p>
+      Aihe: <br />
+      <input type="text" name="aihe" value="{{ test.aihe }}"/>
+    </p>
+    <p>
+      Vuosi: <br />
+      <input type="text" name="vuosi" value="{{ test.vuosi }}"/>
+    </p>
+    <p>
+      Koe: <br />
+      <textarea name="koe" rows="16" cols="60">{{ test.koe }}</textarea>
+    </p>
+    <input type="hidden" name="test_id" value="{{ test.id }}" />
+    <input type="submit" value="Päivitä koetta" />
+  </form>
+</body>
+
+</html>

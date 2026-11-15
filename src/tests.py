@@ -12,6 +12,8 @@ def get_tests():
 
 def get_test(test_id):
     sql = """SELECT users.username,
+                    users.id user_id,
+                    tests.id,
                     tests.aine,
                     tests.aihe,
                     tests.vuosi,
@@ -19,5 +21,13 @@ def get_test(test_id):
             FROM users, tests
             WHERE tests.user_id = users.id AND
                 tests.id = ?"""
-    
+
     return db.query(sql, [test_id])[0]
+
+def update_test(test_id, aine, aihe, vuosi, koe):
+    sql = """UPDATE tests SET aine = ?,
+                              aihe = ?,
+                              vuosi = ?,
+                              koe = ?
+                          WHERE id = ?"""
+    db.execute(sql, [aine, aihe, vuosi, koe, test_id])

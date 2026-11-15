@@ -34,6 +34,23 @@ def create_test():
 
     return redirect("/")
 
+@app.route("/edit_test/<int:test_id>")
+def edit_test(test_id):
+    test = tests.get_test(test_id)
+    return render_template("edit_test.html", test=test)
+
+@app.route("/update_test", methods=["POST"])
+def update_test():
+    test_id = request.form["test_id"]
+    aine = request.form["aine"]
+    aihe = request.form["aihe"]
+    vuosi = request.form["vuosi"]
+    koe = request.form["koe"]
+
+    tests.update_test(test_id, aine, aihe, vuosi, koe)
+
+    return redirect("/test/" + str(test_id))
+
 @app.route("/register")
 def register():
     return render_template("register.html")

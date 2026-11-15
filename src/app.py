@@ -93,7 +93,7 @@ def create_user():
     except sqlite3.IntegrityError:
         return "VIRHE: tunnus on jo varattu"
 
-    return "Tunnus luotu"
+    return render_template("create_user.html")
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

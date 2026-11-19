@@ -8,19 +8,18 @@ Opettajien koepankki
 - Käyttäjä pystyy valitsemaan eri aineiden, vuosien, opettajien kokeita ja kirjoittamaan niihin kommentteja
 
 ## Ohjeet tarkastajalle:
-Käytetty uv:ta projektissa. Eli projektin saa toimimaan seuraavasti.
 
 Aja ensin
 
 ```
-uv sync
+$ pip install flask
 ```
 
 Seuraavalla komennolla saat taulut tietokantaan
 ```
-uv run sqlite3 src/database.db < src/schema.sql
+$ sqlite3 database.db < schema.sql
 ```
 Jos olet koepankki-repositorion juuressa, niin ohjelma ajaa itsensä komennolla
 ```
-uv run python src/app.py
+$ flask run
 ```

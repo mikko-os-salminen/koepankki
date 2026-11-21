@@ -1,5 +1,5 @@
 import sqlite3
-from flask import Flask, request, render_template, redirect, session
+from flask import Flask, abort, request, render_template, redirect, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import db
 import config
@@ -47,11 +47,16 @@ def create_test():
 @app.route("/edit_test/<int:test_id>")
 def edit_test(test_id):
     test = tests.get_test(test_id)
+    if test["user_id"] != session["user_id"]:
+        abort(403)
     return render_template("edit_test.html", test=test)
 
 @app.route("/update_test", methods=["POST"])
 def update_test():
     test_id = request.form["test_id"]
+    test = tests.get_test(test_id)
+    if test["user_id"] != session["user_id"]:
+        abort(403)
     aine = request.form["aine"]
     aihe = request.form["aihe"]
     vuosi = request.form["vuosi"]
@@ -65,6 +70,8 @@ def update_test():
 def remove_test(test_id):
     if request.method == "GET":
         test = tests.get_test(test_id)
+        if test["user_id"] != session["user_id"]:
+            abort(403)
         return render_template("remove_test.html", test=test)
 
     if request.method == "POST":

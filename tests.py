@@ -6,7 +6,14 @@ def add_test(aine, aihe, vuosi, koe, user_id):
 
 
 def get_tests():
-    sql = "SELECT id, aine, aihe, vuosi, user_id FROM tests ORDER BY aine"
+    sql = """SELECT T.id,
+                    T.aine, 
+                    T.aihe, 
+                    T.vuosi, 
+                    U.username 
+              FROM tests as T
+              JOIN users as U ON T.user_id = U.id
+              ORDER BY T.aine"""
 
     return db.query(sql)
 
@@ -38,8 +45,13 @@ def remove_test(test_id):
     db.execute(sql, [test_id])
 
 def find_tests(query):
-    sql = """SELECT id, aine, aihe, vuosi
-             FROM tests
+    sql = """SELECT T.id,
+                    T.aine, 
+                    T.aihe, 
+                    T.vuosi,
+                    U.username
+             FROM tests as T
+             JOIN users ON tests.user_id = users.id
              WHERE aine LIKE ?
              ORDER BY aihe"""
     return db.query(sql, ["%" + query + "%"])

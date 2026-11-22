@@ -3,6 +3,11 @@
 
 <head>
   <title>Koekirjasto</title>
+  <style>
+  table { border-collapse: collapse; }
+  th, td { padding: 4px 16px; text-align: left; }
+  th { border-bottom: 1px solid #888; }
+  </style>
 </head>
 
 <body>
@@ -29,11 +34,26 @@
 
   <h2> Lista kokeista:</h2>
 
-  <ul>
+<table>
+  <thead>
+    <tr>
+      <th>Tekijä</th>
+      <th>Aine</th>
+      <th>Aihe</th>
+      <th>Vuosi</th>
+    </tr>
+  </thead>
+  <tbody>
     {% for test in tests %}
-    <li><a href="/test/{{ test.id }}">{{ test.aine, test.aihe, test.vuosi }}</a></li>
+    <tr>
+      <td>{{ test.username }}</td>
+      <td>{{ test.aine }}</td>
+      <td><a href="/test/{{ test.id }}">{{ test.aihe }}</a></td>
+      <td>{{ test.vuosi }}</td>
+    </tr>
     {% endfor %}
-  </ul>
+  </tbody>
+</table>
 </body>
 
 </html>

@@ -6,6 +6,9 @@
 </head>
 
 <body>
+  {% if error %}
+  <p>{{ error }}</p>
+  {% endif %}
   <h2>Lisää uusi koe:</h2>
   <form action="/create_test" method="post">
     <p>

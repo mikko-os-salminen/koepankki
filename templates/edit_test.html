@@ -6,6 +6,9 @@
 </head>
 
 <body>
+  {% if error %}
+  <p>{{ error }}</p>
+  {% endif %}
   <h2>Muokkaa koetta:</h2>
   <form action="/update_test" method="post">
     <p>
@@ -27,7 +30,7 @@
     <p>
       Vuosi: <br />
       <select name="vuosi" required>
-      {% for y in ["2026", "2025", "2024"] %}
+      {% for y in [2026, 2025, 2024] %}
         <option value="{{ y }}" {% if y == test.vuosi %}selected{% endif %}>
         {{ y }}
         </option>

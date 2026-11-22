@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import date
 from flask import Flask, abort, request, render_template, redirect, session
 from werkzeug.security import generate_password_hash, check_password_hash
 import db
@@ -7,6 +8,9 @@ import tests
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+MAX_YEAR = date.today().year + 1
+MIN_YEAR = 2024
 
 @app.route("/")
 def index():
@@ -40,18 +44,33 @@ def create_test():
     aihe = request.form["aihe"]
     vuosi = request.form["vuosi"]
     koe = request.form["koe"]
-    user_id = session["user_id"]
+    user_id = session.get("user_id")
+    error_message = None
+    try:
+        int_vuosi = int(vuosi)
+        if int_vuosi < MIN_YEAR or int_vuosi > MAX_YEAR:
+            raise ValueError
+    except ValueError:
+        error_message = f"Vuosiluvun pitää olla kokonaisluku vuoden {MIN_YEAR} jälkeen."
+    else:
+        tests.add_test(aine, aihe, int_vuosi, koe, user_id)
+        return redirect("/")
 
-    tests.add_test(aine, aihe, vuosi, koe, user_id)
-
-    return redirect("/")
+    return render_template(
+        "new_test.html",
+        error=error_message,
+        aine=aine,
+        aihe=aihe,
+        vuosi=vuosi,
+        koe=koe
+    )
 
 @app.route("/edit_test/<int:test_id>")
 def edit_test(test_id):
     test = tests.get_test(test_id)
     if not test:
         abort(404)
-    if test["user_id"] != session["user_id"]:
+    if test["user_id"] != session.get("user_id"):
         abort(403)
     return render_template("edit_test.html", test=test)
 
@@ -61,16 +80,38 @@ def update_test():
     test = tests.get_test(test_id)
     if not test:
         abort(404)
-    if test["user_id"] != session["user_id"]:
+    if test["user_id"] != session.get("user_id"):
         abort(403)
     aine = request.form["aine"]
     aihe = request.form["aihe"]
     vuosi = request.form["vuosi"]
     koe = request.form["koe"]
+    user_id = session.get("user_id")
+    error_message = None
+    try:
+        int_vuosi = int(vuosi)
+        if int_vuosi < MIN_YEAR or int_vuosi > MAX_YEAR:
+            raise ValueError
+    except ValueError:
+        error_message = f"Vuosiluvun pitää olla kokonaisluku vuoden {MIN_YEAR} jälkeen."
+    else:
+        tests.update_test(aine, aihe, int_vuosi, koe, user_id)
+        return redirect("/test/" + str(test_id))
 
-    tests.update_test(test_id, aine, aihe, vuosi, koe)
+    test = {
+        "id": test_id,
+        "aine": aine,
+        "aihe": aihe,
+        "vuosi": vuosi,
+        "koe": koe,
+    }
 
-    return redirect("/test/" + str(test_id))
+    return render_template(
+        "edit_test.html",
+        error=error_message,
+        test=test
+    )
+
 
 @app.route("/remove_test/<int:test_id>", methods=["GET", "POST"])
 def remove_test(test_id):
@@ -78,7 +119,7 @@ def remove_test(test_id):
         test = tests.get_test(test_id)
         if not test:
             abort(404)
-        if test["user_id"] != session["user_id"]:
+        if test["user_id"] != session.get("user_id"):
             abort(403)
         return render_template("remove_test.html", test=test)
 

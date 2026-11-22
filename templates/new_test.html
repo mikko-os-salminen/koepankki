@@ -10,7 +10,12 @@
   <form action="/create_test" method="post">
     <p>
       Aine: <br />
-      <input type="text" name="aine" />
+      <select name="aine" required>
+        <option value="" disabled selected>Valitse aine</option>
+        <option value="Fysiikka">Fysiikka</option>
+        <option value="Kemia">Kemia</option>
+        <option value="Matematiikka">Matematiikka</option>
+      </select>
     </p>
     <p>
       Aihe: <br />
@@ -18,8 +23,14 @@
     </p>
     <p>
       Vuosi: <br />
-      <input type="text" name="vuosi" />
+      <select name="vuosi" required>
+        <option value="" disabled selected>Valitse vuosi</option>
+        <option value="2026">2026</option>
+        <option value="2025">2025</option>
+        <option value="2024">2024</option>
+      </select>  
     </p>
+    <p>
       Koe: <br />
       <textarea name="koe" rows="16" cols="60"></textarea>
     </p>
@@ -27,7 +38,7 @@
   </form>
   <p>
     <a href="/">Palaa etusivulle</a>
-  <p>
+  </p>
 </body>
 
 </html>

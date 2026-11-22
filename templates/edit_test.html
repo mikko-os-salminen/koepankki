@@ -10,7 +10,15 @@
   <form action="/update_test" method="post">
     <p>
       Aine: <br />
-      <input type="text" name="aine" value="{{ test.aine }}"/>
+
+      <select name="aine" required>
+      {% for s in ["Kemia", "Matematiikka", "Fysiikka"] %}
+        <option value="{{ s }}" {% if s == test.aine %}selected{% endif %}>
+        {{ s }}
+        </option>
+      {% endfor %}
+      </select>
+
     </p>
     <p>
       Aihe: <br />
@@ -18,7 +26,13 @@
     </p>
     <p>
       Vuosi: <br />
-      <input type="text" name="vuosi" value="{{ test.vuosi }}"/>
+      <select name="vuosi" required>
+      {% for y in ["2026", "2025", "2024"] %}
+        <option value="{{ y }}" {% if y == test.vuosi %}selected{% endif %}>
+        {{ y }}
+        </option>
+      {% endfor %}
+      </select>
     </p>
     <p>
       Koe: <br />

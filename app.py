@@ -26,6 +26,8 @@ def find_test():
 @app.route("/test/<int:test_id>")
 def show_test(test_id):
     test = tests.get_test(test_id)
+    if not test:
+        abort(404)
     return render_template("show_test.html", test=test)
 
 @app.route("/new_test")
@@ -47,6 +49,8 @@ def create_test():
 @app.route("/edit_test/<int:test_id>")
 def edit_test(test_id):
     test = tests.get_test(test_id)
+    if not test:
+        abort(404)
     if test["user_id"] != session["user_id"]:
         abort(403)
     return render_template("edit_test.html", test=test)
@@ -55,6 +59,8 @@ def edit_test(test_id):
 def update_test():
     test_id = request.form["test_id"]
     test = tests.get_test(test_id)
+    if not test:
+        abort(404)
     if test["user_id"] != session["user_id"]:
         abort(403)
     aine = request.form["aine"]
@@ -70,6 +76,8 @@ def update_test():
 def remove_test(test_id):
     if request.method == "GET":
         test = tests.get_test(test_id)
+        if not test:
+            abort(404)
         if test["user_id"] != session["user_id"]:
             abort(403)
         return render_template("remove_test.html", test=test)

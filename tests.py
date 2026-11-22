@@ -22,7 +22,8 @@ def get_test(test_id):
             WHERE tests.user_id = users.id AND
                 tests.id = ?"""
 
-    return db.query(sql, [test_id])[0]
+    result = db.query(sql, [test_id])
+    return result[0] if result else None
 
 def update_test(test_id, aine, aihe, vuosi, koe):
     sql = """UPDATE tests SET aine = ?,
